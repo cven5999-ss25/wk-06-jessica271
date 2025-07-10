@@ -1,9 +1,11 @@
 ---
 title: "Final Practice"
 subtitle: "Section 01"
+author: "Jessica Maina"
 format:
   html:
     embed-resources: true
+    toc: true
 execute: 
   echo: true
   warning: false
@@ -29,15 +31,29 @@ city_data <- read_csv(here("data/what_a_waste/what-a-waste-city-level-data.csv")
 distance <- read_csv(here("data/what_a_waste/what-a-waste-city-level-data-distance.csv"))
 ```
 
+```{r}
+city_data <- read_csv(here("data/what_a_waste/what-a-waste-city-level-data.csv"))
+distance <- read_csv(here("data/what_a_waste/what-a-waste-city-level-data-distance.csv"))
+```
+
 # Task 1.1
 
 The data that is used for these exercises are subsets of data from the [What a Waste Global Database maintained by the World Bank](https://datacatalog.worldbank.org/search/dataset/00395971).
 
 1.  Use functions you have learned in the course to explore the data the `city_data` object.
 
+    ```{r}
+    glimpse(city_data)
+    head(city_data, n = 2)
+    ```
+
 2.  Describe the variables
 
+    **Variables** are the columns in the city_data for example, city, country and income_id. There are 31 variables in the data.
+
 3.  Describe the observations
+
+    **Observations** are the data being measured in the city_data object. For example, income_id, population and waste_treatment_compost_percent.
 
 # Task 1.2
 
@@ -49,6 +65,11 @@ The data that is used for these exercises are subsets of data from the [What a W
 
 ```{r}
 city_data |> 
+  select(city, income_id, starts_with("waste"))
+```
+
+```{r}
+city_data |>
   select(city, income_id, starts_with("waste"))
 ```
 
@@ -66,6 +87,11 @@ city_data |>
   select(city, income_id, contains("distance"), -transportation_distance_na)
 ```
 
+```{r}
+city_data |>
+  select(city, income_id, contains("distance"), -transportation_distance_na)
+```
+
 # Task 1.4
 
 1.  Start with the `distance` object and use a function of your choice to create a subset that removes NAs from the variable which stores values for the total transporation distance in km/year.
@@ -77,12 +103,22 @@ distance_complete <- distance |>
   filter(!is.na(transportation_distance_total_km_year))
 ```
 
+```{r}
+distance_complete <- distance |>
+  na.omit(transportation_distance_total_km_year)
+```
+
 # Task 1.5
 
 1.  Start with the `distance_complete` object and use the `arrange()` function to display the 'transporation_distance_disposal_site' variable in descending order.
 
 ```{r}
 distance_complete |> 
+  arrange(desc(transporation_distance_disposal_site))
+```
+
+```{r}
+distance_complete |>
   arrange(desc(transporation_distance_disposal_site))
 ```
 
@@ -100,9 +136,20 @@ distance_complete_extended <- distance_complete |>
   mutate(trips_1000_ppl_day = trips_day / pop * 1000)
 ```
 
+```{r}
+distance_complete_extended <- distance_complete |>
+  mutate(trips_day = transportation_distance_total_km_year / transporation_distance_disposal_site / 365) |>
+  mutate(trips_1000_ppl_day = trips_day / pop * 1000)
+```
+
 # Task 1.7
 
 1.  Use the `filter()` function to create a subset from `distance_complete_extended` containing observations for cities where the number of trips per 1000 people and day is between 1 (inclusive) and 2 (not inclusive).
+
+```{r}
+distance_complete_extended |> 
+  filter(trips_1000_ppl_day >= 1 & trips_1000_ppl_day < 2)
+```
 
 ```{r}
 distance_complete_extended |> 
@@ -135,3 +182,8 @@ Once you have ensured that the Quarto document renders without errors and you ha
 3.  Write a meaningful title in the **Title** field
 4.  Tag the course instructor with using the `@` sign in combination with `larnsce` as the username
 5.  Add any questions or comments
+
+```{r}
+library(usethis)
+use_git_config(user.name = "jessica271", user.email = "Jessica.Maina@colorado.edu")
+```
