@@ -13,15 +13,41 @@ Learning reflections are part of your weekly homework and have a weight of 20% o
 
 # Lecture
 
-<!--# Add your reflections on the lecture of this week here -->
+Data frames can be joined using something_join(x, y) function. For example,
+
+left_join(all rows from x)
+
+right\_ join(all rows from y)
+
+full_join(x, y)
 
 # Homework Assignment
 
-<!--# Add your reflections on the homework programming assignment here -->
+The join( ) function only joins data frames not columns in one data frame. For example, if there are two objects population and waste_generation, the function can be used to join the two tables and not columns in one of the objects alone.
+
+NAs can be removed from a dataset using the following functions:
+
+na.omit( )
+
+filter(!is.na( ))
 
 # Readings
 
-<!--# Add your reflections on the required readings here -->
+Multiple tables of data in R are called **relational data** because they have a relation. The following verbs are used to work with relational data:
+
+Filtering joins: It adds a new variables to a data frame from matching observations in another.
+
+Mutate joins - It filters observations from one data frame whether they match an observation in the other table.
+
+Set operations - treat observations as if they were set elements.
+
+The variables used to connect each pair of tables are called **keys** which uniquely identifies observations. There are two types:
+
+Primary keys which identify observations on their one  tables.
+
+Foreign keys which identify observations on other tables.
+
+Surrogate keys are used where a table lacks one primary key. They are added using mutate( ) or row_number( ) function.
 
 # Submit learning reflections
 
